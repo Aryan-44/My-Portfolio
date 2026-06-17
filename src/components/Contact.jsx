@@ -47,7 +47,7 @@ const Contact = () => {
           viewport={{ once: true, margin: "-50px" }}
           className="flex flex-col gap-4 text-left mb-12"
         >
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+          <input type="hidden" name="access_key" value="189ac2b0-2328-4d8d-8fcb-94df7cc2bc4a" />
           <input type="hidden" name="subject" value="New Portfolio Contact Submission" />
           <div className="flex flex-col gap-2">
             <label htmlFor="name" className="font-code text-[13px]" style={{ color: 'var(--text-secondary)' }}>Name</label>
