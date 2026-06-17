@@ -1,123 +1,104 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  
-  // Parallax translation for the big text
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "30%"]);
-
   return (
-    <section ref={ref} id="contact" className="bg-[#0a0a0a] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 md:pb-0 border-t border-gray-900">
-      {/* Huge Background Text */}
-      <motion.div 
-        style={{ y }}
-        className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12"
-      >
-        <h1 
-          className="text-[25vw] leading-[0.75] font-black text-white uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
-          style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}
+    <section id="contact" className="section-padding">
+      <div className="section-container text-center max-w-[600px] mx-auto">
+        <motion.h2 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-50px" }}
+          className="section-title mb-2"
         >
-          Contact
-        </h1>
-      </motion.div>
+          Let's build something together
+        </motion.h2>
 
-      {/* Form Card Overlay */}
-      <div className="relative z-10 w-full flex justify-end items-end">
-        <div 
-          data-aos="fade-up"
-          className="bg-[#ff2a2a] w-full md:w-[85%] lg:w-[75%] p-8 md:p-16 text-white flex flex-col justify-between"
+        <motion.p 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          style={{ color: 'var(--text-secondary)' }}
+          className="mb-8"
         >
-          <div className="text-xs font-bold tracking-[0.2em] mb-12 md:mb-20 uppercase opacity-90">
-            Reach Us
+          Feel free to reach out if you're looking for a data scientist or just want to connect.
+        </motion.p>
+        
+        <motion.a 
+          href="mailto:kummitiaryan@gmail.com" 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true, margin: "-50px" }}
+          className="inline-block text-[24px] font-bold mb-10 relative group"
+          style={{ color: 'var(--text-primary)' }}
+        >
+          kummitiaryan@gmail.com
+          <span className="absolute -bottom-1 left-0 w-full h-[2px] transform scale-x-0 origin-right transition-transform duration-300 group-hover:scale-x-100 group-hover:origin-left" style={{ backgroundColor: 'var(--accent-primary)' }}></span>
+        </motion.a>
+
+        <motion.form 
+          action="https://api.web3forms.com/submit" method="POST"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true, margin: "-50px" }}
+          className="flex flex-col gap-4 text-left mb-12"
+        >
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+          <input type="hidden" name="subject" value="New Portfolio Contact Submission" />
+          <div className="flex flex-col gap-2">
+            <label htmlFor="name" className="font-code text-[13px]" style={{ color: 'var(--text-secondary)' }}>Name</label>
+            <input type="text" id="name" name="name" required placeholder="Your name" className="p-3 border rounded-md outline-none transition-colors" 
+                   style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                   onFocus={(e) => e.target.style.borderColor = 'var(--accent-primary)'}
+                   onBlur={(e) => e.target.style.borderColor = 'var(--border-color)'}
+            />
           </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="email" className="font-code text-[13px]" style={{ color: 'var(--text-secondary)' }}>Email</label>
+            <input type="email" id="email" name="email" required placeholder="your.email@example.com" className="p-3 border rounded-md outline-none transition-colors" 
+                   style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                   onFocus={(e) => e.target.style.borderColor = 'var(--accent-primary)'}
+                   onBlur={(e) => e.target.style.borderColor = 'var(--border-color)'}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="message" className="font-code text-[13px]" style={{ color: 'var(--text-secondary)' }}>Message</label>
+            <textarea id="message" name="message" required placeholder="How can I help you?" className="p-3 border rounded-md outline-none transition-colors min-h-[120px] resize-y" 
+                   style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+                   onFocus={(e) => e.target.style.borderColor = 'var(--accent-primary)'}
+                   onBlur={(e) => e.target.style.borderColor = 'var(--border-color)'}
+            />
+          </div>
+          <button type="submit" className="mt-4 px-8 py-3 rounded-md font-code text-sm uppercase tracking-wider transition-colors"
+                  style={{ backgroundColor: 'var(--accent-primary)', color: 'var(--bg-color)' }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--accent-hover)'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--accent-primary)'}
+          >
+            Send Message
+          </button>
+        </motion.form>
 
-          <form className="flex flex-col gap-12 md:gap-16 w-full">
-            <div className="flex flex-col md:flex-row gap-12 md:gap-20 w-full">
-              {/* Left Column */}
-              <div className="flex-1 flex flex-col gap-10">
-                <div className="relative">
-                  <input 
-                    type="text" 
-                    id="firstName" 
-                    placeholder="First Name" 
-                    className="w-full bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium rounded-none"
-                  />
-                </div>
-                <div className="relative">
-                  <input 
-                    type="text" 
-                    id="lastName" 
-                    placeholder="Last Name" 
-                    className="w-full bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium rounded-none"
-                  />
-                </div>
-                <div className="relative">
-                  <input 
-                    type="email" 
-                    id="email" 
-                    placeholder="Email" 
-                    className="w-full bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium rounded-none"
-                  />
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="flex-1 flex flex-col">
-                <div className="relative h-full flex flex-col">
-                  <textarea 
-                    id="message" 
-                    placeholder="Type your message here" 
-                    className="w-full h-full min-h-[120px] bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium resize-none rounded-none"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Section */}
-            <div className="flex flex-col md:flex-row gap-12 mt-4">
-              {/* Left text */}
-              <div className="flex-1 flex items-start gap-4 text-sm font-medium text-white/90">
-                <input 
-                  type="checkbox" 
-                  id="permission" 
-                  className="mt-1 w-4 h-4 rounded-sm border-white/40 bg-transparent text-white focus:ring-white focus:ring-offset-0 focus:ring-offset-transparent cursor-pointer" 
-                  style={{ accentColor: "white" }}
-                />
-                <label htmlFor="permission" className="cursor-pointer max-w-[280px] leading-snug">
-                  I give permission to contact me at this email address.
-                </label>
-              </div>
-
-              {/* Right text & button */}
-              <div className="flex-1 flex flex-col gap-8 text-xs text-white/70 font-medium">
-                <p className="leading-relaxed max-w-[400px]">
-                  This site is protected by reCAPTCHA and the Google <a href="#" className="underline hover:text-white transition-colors">Privacy Policy</a> and <a href="#" className="underline hover:text-white transition-colors">Terms of Service</a> apply.
-                </p>
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
-                  <p className="max-w-[250px] leading-relaxed">
-                    For information on how to unsubscribe, please review our <a href="#" className="underline hover:text-white transition-colors">privacy policy</a>.
-                  </p>
-                  
-                  <button 
-                    type="submit" 
-                    className="px-8 py-3 rounded-full border border-white/40 text-white font-bold flex items-center justify-center gap-3 hover:bg-white hover:text-[#ff2a2a] transition-all duration-300 group whitespace-nowrap self-start sm:self-auto"
-                  >
-                    Send
-                    <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-
-        </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          viewport={{ once: true }}
+          className="flex justify-center gap-6"
+        >
+          <a href="https://linkedin.com/in/k-aryan-58a852283" target="_blank" rel="noreferrer" className="transition-transform hover:-translate-y-1" style={{ color: 'var(--text-muted)' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-primary)'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="https://github.com/Aryan-44" target="_blank" rel="noreferrer" className="transition-transform hover:-translate-y-1" style={{ color: 'var(--text-muted)' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-primary)'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          </a>
+          <a href="mailto:kummitiaryan@gmail.com" className="transition-transform hover:-translate-y-1" style={{ color: 'var(--text-muted)' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-primary)'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

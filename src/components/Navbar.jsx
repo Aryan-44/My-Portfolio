@@ -1,111 +1,64 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
-  // Handle scroll to make navbar more solid
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = ['Home', 'About', 'Skills', 'Projects', 'Contact'];
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  };
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isOpen 
-          ? 'bg-[#ff2a2a] py-4'
-          : isScrolled 
-            ? 'bg-transparent py-4' 
-            : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-        
-        {/* Left Side: Logo/Name */}
-        <div className="flex items-center">
-          <a href="#" className="text-white text-2xl font-black tracking-tight">
-            Leeshark<span className="text-red-500">.</span>
-          </a>
-        </div>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isScrolled ? 'py-4 shadow-md backdrop-blur-md' : 'py-6 backdrop-blur-sm'
+    }`} style={{ backgroundColor: 'var(--glass-bg)', borderBottom: '1px solid var(--border-color)' }}>
+      
+      <div className="section-container flex justify-between items-center">
+        {/* Logo */}
+        <a href="#" className="font-bold text-2xl tracking-tighter" style={{ color: 'var(--accent-primary)' }}>
+          Aryan.
+        </a>
 
-        {/* Center: Desktop Menu Links */}
-        <div className="hidden md:flex space-x-8">
-          {navLinks.map((link) => (
-            <a 
-              key={link} 
-              href={`#${link.toLowerCase()}`}
-              className="text-white/80 hover:text-white font-medium relative group transition-colors duration-300"
-            >
-              {link}
-              {/* Smooth hover underline */}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          ))}
-        </div>
+        {/* Links */}
+        <div className="hidden md:flex gap-8 items-center">
+          <a href="#about" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>About</a>
+          <a href="#experience" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>Experience</a>
+          <a href="#skills" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>Skills</a>
+          <a href="#projects" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>Projects</a>
+          
+          <button onClick={toggleTheme} className="transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>
+            {isDark ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            )}
+          </button>
 
-        {/* Right Side: CTA Button */}
-        <div className="hidden md:block">
-          <a 
-            href="#contact" 
-            className="px-6 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-semibold hover:bg-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all duration-300 backdrop-blur-md"
+          <a href="#contact" className="px-6 py-2 border rounded-md font-code text-sm uppercase tracking-wider transition-all" 
+             style={{ 
+               backgroundColor: 'var(--accent-primary)', 
+               color: 'var(--bg-color)', 
+               borderColor: 'var(--accent-primary)'
+             }}
+             onMouseEnter={(e) => {
+               e.target.style.backgroundColor = 'var(--accent-hover)';
+             }}
+             onMouseLeave={(e) => {
+               e.target.style.backgroundColor = 'var(--accent-primary)';
+             }}
           >
             Hire Me
           </a>
-        </div>
-
-        {/* Mobile Hamburger Menu Icon */}
-        <div className="md:hidden flex items-center">
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-white focus:outline-none p-2"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Slide-Down Menu */}
-      <div 
-        className={`md:hidden absolute top-full left-0 w-full transition-all duration-300 overflow-hidden ${
-          isOpen ? 'max-h-96 py-4 opacity-100 bg-[#ff2a2a] shadow-2xl' : 'max-h-0 opacity-0 bg-transparent'
-        }`}
-      >
-        <div className="flex flex-col px-6 space-y-4">
-          {navLinks.map((link) => (
-            <a 
-              key={link} 
-              href={`#${link.toLowerCase()}`}
-              onClick={() => setIsOpen(false)}
-              className="text-white hover:text-black font-bold text-lg border-b border-white/20 pb-2 transition-colors"
-            >
-              {link}
-            </a>
-          ))}
-          <div className="pt-4 pb-2">
-             <a 
-               href="#contact" 
-               onClick={() => setIsOpen(false)} 
-               className="inline-block px-6 py-3 rounded-full bg-white text-[#ff2a2a] font-black hover:bg-black hover:text-white transition-colors w-full text-center shadow-lg"
-             >
-               Hire Me
-             </a>
-          </div>
         </div>
       </div>
     </nav>
