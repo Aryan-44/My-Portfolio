@@ -11,10 +11,9 @@ const Experience = () => {
       dates: "Feb 2024 – Mar 2024",
       logo: "C",
       bullets: [
-        "Developed Python-based analytics workflows for processing structured datasets and generating actionable insights.",
-        "Built automated ETL pipelines that reduced manual preprocessing effort by 90%.",
-        "Applied feature engineering and statistical analysis techniques to improve predictive model performance.",
-        "Performed data cleaning, transformation, and model evaluation using Python-based data science tools (Pandas, NumPy)."
+        "Built Python-based ETL pipelines for data ingestion, preprocessing, and model-ready data delivery, reducing manual effort by 90%.",
+        "Applied feature engineering, exploratory data analysis, and cross-validation using Pandas, NumPy, and Scikit-learn; evaluated models using Accuracy, F1-score, and AUC-ROC.",
+        "Documented experiments and model performance, translating analytical findings into actionable insights for stakeholders."
       ]
     }
   ];

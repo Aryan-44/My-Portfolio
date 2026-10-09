@@ -4,28 +4,58 @@ import { motion } from 'framer-motion';
 const Projects = () => {
   const projects = [
     {
+      title: "Automated Weather Alert Agent",
+      desc: "Built an automated weather monitoring workflow in n8n that retrieves real-time weather data from Open-Meteo and processes it using a Groq-powered AI agent. Implemented conditional weather-alert logic and automated daily email notifications for hands-free monitoring.",
+      tags: ["n8n", "Open-Meteo", "Groq", "Gmail", "Workflow Automation"],
+      github: "https://github.com/Aryan-44"
+    },
+    {
+      title: "Multi-Document RAG Assistant",
+      desc: "Developed a multi-document RAG system supporting PDF, DOCX, CSV, and XLSX files with document loading, chunking, embeddings, vector indexing, and semantic retrieval. Integrated Groq-hosted LLMs to generate grounded, context-aware responses.",
+      tags: ["Python", "LangChain", "FAISS", "Groq API", "RAG Pipeline"],
+      github: "https://github.com/Aryan-44"
+    },
+    {
+      title: "Student Performance EDA & Preprocessing",
+      desc: "Performed end-to-end exploratory data analysis on a student performance dataset, including data cleaning, missing-value handling, outlier detection, distribution & correlation analysis, and feature scaling for analysis-ready data.",
+      tags: ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "EDA"],
+      github: "https://github.com/Aryan-44"
+    },
+    {
+      title: "RescueGrid",
+      desc: "Predictive emergency donor matching and bio-logistics system published in AIJFR Journal (2026). Forecasts donor demand and optimizes emergency response using multi-source healthcare datasets and statistical modeling.",
+      tags: ["Python", "Predictive Analytics", "Statistical Modeling", "Healthcare AI"],
+      github: "https://github.com/Aryan-44"
+    },
+    {
       title: "Equity Research Dashboard",
       desc: "AI-Powered Financial Intelligence Platform using Generative AI, RAG architecture, and semantic search workflows for context-aware financial news question answering.",
       tags: ["LangChain", "Gemini", "FAISS", "Streamlit", "Vector Embeddings"],
-      github: "#"
+      github: "https://github.com/Aryan-44"
     },
     {
       title: "Job Description Simplifier",
       desc: "AI-Powered Recruitment Intelligence Tool leveraging Llama 3.3 70B and prompt engineering to automatically scrape, clean, and simplify complex job postings.",
       tags: ["Llama 3.3 70B", "Prompt Engineering", "Web Scraping", "Python"],
-      github: "#"
+      github: "https://github.com/Aryan-44"
+    },
+    {
+      title: "JobPilot — Auto Job Application Agent",
+      desc: "Autonomous job-search and application platform featuring a weighted scoring engine, AI-driven cover letter generation, Playwright browser automation, FastAPI backend, and Streamlit dashboard.",
+      tags: ["FastAPI", "Streamlit", "LLM Scoring", "Playwright", "SQLite"],
+      github: "https://github.com/Aryan-44"
+    },
+    {
+      title: "Text-to-SQL GenAI Query Assistant",
+      desc: "Intelligent database querying system powered by LangChain, Gemini, and ChromaDB vector store. Employs semantic similarity few-shot prompt selection to convert natural language queries into accurate SQL executions.",
+      tags: ["LangChain", "Gemini", "ChromaDB", "MySQL", "Few-Shot Prompting"],
+      github: "https://github.com/Aryan-44"
     },
     {
       title: "Skill-Bridge",
       desc: "AI-Powered Team Formation Platform using NLP and semantic search to intelligently match candidates based on unstructured resumes.",
       tags: ["Python", "NLP", "Vector Embeddings", "FastAPI"],
-      github: "#"
-    },
-    {
-      title: "RescueGrid",
-      desc: "Predictive Emergency Donor Matching System that forecasts donor demand using multi-source healthcare datasets and statistical modeling.",
-      tags: ["Predictive Analytics", "Data Cleaning", "Statistical Modeling"],
-      github: "#"
+      github: "https://github.com/Aryan-44"
     }
   ];
 

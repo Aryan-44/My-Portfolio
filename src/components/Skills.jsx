@@ -4,28 +4,37 @@ import { motion } from 'framer-motion';
 const Skills = () => {
   const topSkills = [
     { name: "Python", value: "90%" },
-    { name: "Generative AI & LLMs", value: "85%" },
-    { name: "Machine Learning", value: "85%" },
-    { name: "RAG & Vector Embeddings", value: "80%" },
+    { name: "Generative AI & LLMs", value: "88%" },
+    { name: "Machine Learning & EDA", value: "85%" },
+    { name: "AI Automation (n8n)", value: "85%" },
+    { name: "RAG & Vector Embeddings", value: "82%" },
     { name: "SQL", value: "80%" }
   ];
 
   const categories = [
     {
       title: "Programming",
-      skills: ["Python", "SQL", "C", "JavaScript"]
+      skills: ["Python", "SQL", "C"]
     },
     {
-      title: "AI & Machine Learning",
-      skills: ["Generative AI", "RAG", "LLMs", "Prompt Engineering", "NLP", "Machine Learning", "Semantic Search", "Predictive Analytics"]
+      title: "Generative AI",
+      skills: ["LLMs", "RAG", "Prompt Engineering", "Vector Embeddings", "Semantic Search", "FAISS", "Groq API", "AI Agents"]
     },
     {
-      title: "Frameworks & Libraries",
-      skills: ["LangChain", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Streamlit"]
+      title: "AI Automation",
+      skills: ["n8n", "Flowise", "Workflow Automation", "LLM Orchestration"]
     },
     {
-      title: "Databases & Tools",
-      skills: ["FAISS", "Firebase Firestore", "FastAPI", "REST APIs", "Git", "GitHub"]
+      title: "Machine Learning",
+      skills: ["Machine Learning", "Deep Learning", "NLP", "Feature Engineering", "Data Preprocessing", "EDA", "Model Evaluation", "Predictive Analytics"]
+    },
+    {
+      title: "Libraries & Frameworks",
+      skills: ["Scikit-learn", "Pandas", "NumPy", "Matplotlib", "Seaborn", "TensorFlow/Keras", "Hugging Face Transformers", "LangChain", "FastAPI", "Streamlit"]
+    },
+    {
+      title: "Tools & Databases",
+      skills: ["Git", "GitHub", "Jupyter Notebook", "Google Colab", "VS Code", "REST APIs", "Firebase Firestore", "Vector Stores"]
     }
   ];
 
