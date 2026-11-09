@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Preloader = ({ onEnter }) => {
@@ -40,7 +40,7 @@ const Preloader = ({ onEnter }) => {
           className="fixed inset-0 w-full h-screen bg-black z-[100000] flex flex-col items-center justify-center font-sans text-white"
         >
           {/* Logo / Title */}
-          <motion.div 
+          <motion.div
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="mb-8 text-4xl md:text-5xl font-black tracking-widest uppercase"
@@ -50,7 +50,7 @@ const Preloader = ({ onEnter }) => {
 
           {/* Progress Bar Container */}
           <div className="w-64 h-1 bg-white/20 rounded-full overflow-hidden relative mb-12">
-            <motion.div 
+            <motion.div
               className="absolute top-0 left-0 h-full bg-white"
               initial={{ width: "0%" }}
               animate={{ width: `${Math.min(progress, 100)}%` }}
@@ -71,7 +71,7 @@ const Preloader = ({ onEnter }) => {
                 Enter Aryan's portfolio
               </motion.button>
             ) : (
-              <motion.div 
+              <motion.div
                 className="text-white/50 text-sm tracking-widest font-mono"
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}

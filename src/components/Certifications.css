@@ -1,0 +1,73 @@
+.recognitions-section {
+  background:
+    radial-gradient(ellipse at 6% 35%, rgba(129, 140, 248, 0.05), transparent 33%),
+    var(--bg-color);
+}
+
+.recognitions-intro {
+  max-width: 620px;
+  margin: -1.5rem 0 2rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.recognitions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.recognition-card {
+  min-width: 0;
+  padding: clamp(1.25rem, 2.75vw, 1.75rem);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: linear-gradient(150deg, var(--card-color), var(--surface-color));
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.recognition-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(129, 140, 248, 0.5);
+}
+
+.recognition-card__type {
+  color: var(--accent-secondary);
+  font-family: var(--font-code);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.recognition-card h3 {
+  margin: 0.75rem 0 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.recognition-card__organization {
+  margin: 0.5rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.recognition-card__detail {
+  margin: 0.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .recognitions-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

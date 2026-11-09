@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Preloader from './components/Preloader'
 
 import Navbar from './components/Navbar'
@@ -13,7 +13,7 @@ import Footer from './components/Footer'
 
 function App() {
   const [appState, setAppState] = useState('preloading'); // 'preloading', 'intro', 'portfolio'
-  
+
   useEffect(() => {
     // Set initial theme to dark
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -21,17 +21,6 @@ function App() {
 
   const handleEnterExperience = () => {
     setAppState('portfolio');
-  };
-
-  const handleSelectSection = (sectionId) => {
-    setAppState('portfolio');
-    // Scroll to the selected section after a short delay to allow rendering
-    setTimeout(() => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
   };
 
   return (

@@ -1,118 +1,90 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import SectionHeading from './common/SectionHeading';
+import './Experience.css';
 
-const Experience = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const experiences = [
+  {
+    id: 'cfrsi',
+    role: 'AI/ML Trainee',
+    organization: 'CFRSI',
+    startDate: '2026-08',
+    startLabel: 'August 2026',
+    current: true,
+    responsibilities: [
+      'Develop and evaluate AI/ML solutions in Python using NumPy, Pandas, and Scikit-learn.',
+      'Support data preparation, preprocessing, exploratory data analysis, and feature engineering.',
+      'Run model experiments, document findings, and collaborate on debugging and improvements using Git.',
+    ],
+  },
+  {
+    id: 'coincent',
+    role: 'Data Science & AI Intern',
+    organization: 'Coincent.ai (E-Cell IIT Madras)',
+    startDate: '2024-02',
+    startLabel: 'February 2024',
+    endDate: '2024-03',
+    endLabel: 'March 2024',
+    responsibilities: [
+      'Built Python ETL and data-preparation pipelines for ingestion, preprocessing, and model-ready data delivery.',
+      'Applied feature engineering, exploratory data analysis, and cross-validation using Pandas, NumPy, and Scikit-learn.',
+      'Evaluated models with Accuracy, F1-score, and AUC-ROC, and documented experiments and findings.',
+    ],
+  },
+];
 
-  const experiences = [
-    {
-      company: "Coincent.ai (E-Cell IIT Madras)",
-      role: "Data Science & AI Intern",
-      dates: "Feb 2024 – Mar 2024",
-      logo: "C",
-      bullets: [
-        "Built Python-based ETL pipelines for data ingestion, preprocessing, and model-ready data delivery, reducing manual effort by 90%.",
-        "Applied feature engineering, exploratory data analysis, and cross-validation using Pandas, NumPy, and Scikit-learn; evaluated models using Accuracy, F1-score, and AUC-ROC.",
-        "Documented experiments and model performance, translating analytical findings into actionable insights for stakeholders."
-      ]
-    }
-  ];
-
-  const toggleAccordion = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
+function Experience() {
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="experience" className="section-padding">
+    <section className="section-padding experience-section" id="experience">
       <div className="section-container">
-        <motion.h2 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="section-title"
-        >
-          Where I've Worked
-        </motion.h2>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="relative pl-8 border-l-2"
-          style={{ borderColor: 'var(--border-color)' }}
-        >
-          {experiences.map((exp, index) => {
-            const isActive = activeIndex === index;
-
-            return (
-              <div key={index} className="relative mb-8 last:mb-0">
-                {/* Timeline Dot */}
-                <div 
-                  className={`absolute w-4 h-4 rounded-full border-2 -left-[41px] top-6 transition-colors duration-300 z-10`}
-                  style={{ 
-                    backgroundColor: isActive ? 'var(--accent-primary)' : 'var(--bg-color)',
-                    borderColor: 'var(--accent-primary)',
-                    boxShadow: isActive ? '0 0 10px var(--accent-primary)' : 'none'
-                  }}
-                />
-
-                {/* Header Card */}
-                <div 
-                  className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-colors"
-                  style={{ 
-                    backgroundColor: 'var(--card-color)', 
-                    borderColor: isActive ? 'var(--accent-primary)' : 'var(--border-color)' 
-                  }}
-                  onClick={() => toggleAccordion(index)}
-                >
-                  <div 
-                    className="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-xl"
-                    style={{ backgroundColor: 'var(--surface-color)', color: 'var(--accent-primary)' }}
-                  >
-                    {exp.logo}
-                  </div>
-                  <div className="flex-grow">
-                    <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                      {exp.role}
-                    </h3>
-                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                      {exp.company}
-                    </p>
-                  </div>
-                  <div className="font-code text-[13px] hidden md:block" style={{ color: 'var(--text-muted)' }}>
-                    {exp.dates}
-                  </div>
-                </div>
-
-                {/* Expandable Body */}
-                <AnimatePresence>
-                  {isActive && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="p-6 pt-4 text-[15px]" style={{ color: 'var(--text-secondary)' }}>
-                        <ul className="list-square pl-6 flex flex-col gap-2">
-                          {exp.bullets.map((bullet, i) => (
-                            <li key={i}>{bullet}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </motion.div>
+        <SectionHeading>Experience</SectionHeading>
+        <div className="experience-list">
+          {experiences.map((experience, index) => (
+            <motion.article
+              aria-labelledby={`experience-title-${experience.id}`}
+              className="experience-card"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              key={experience.id}
+              transition={{
+                duration: shouldReduceMotion ? 0 : 0.45,
+                delay: shouldReduceMotion ? 0 : index * 0.08,
+              }}
+              viewport={{ once: true, margin: '-40px' }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <div className="experience-card__meta">
+                <p className="experience-card__eyebrow">
+                  {experience.role}
+                </p>
+                <h3 id={`experience-title-${experience.id}`}>
+                  {experience.organization}
+                </h3>
+                <p className="experience-card__dates">
+                  <time dateTime={experience.startDate}>
+                    {experience.startLabel}
+                  </time>
+                  {' – '}
+                  {experience.current ? (
+                    'Present'
+                  ) : (
+                    <time dateTime={experience.endDate}>
+                      {experience.endLabel}
+                    </time>
                   )}
-                </AnimatePresence>
+                </p>
               </div>
-            );
-          })}
-        </motion.div>
+              <ul className="experience-card__responsibilities">
+                {experience.responsibilities.map((responsibility) => (
+                  <li key={responsibility}>{responsibility}</li>
+                ))}
+              </ul>
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   );
-};
+}
 
 export default Experience;

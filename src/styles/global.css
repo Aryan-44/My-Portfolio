@@ -1,0 +1,90 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  background-color: var(--bg-color);
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  line-height: var(--lh-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: var(--lh-heading);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-secondary);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--accent-primary);
+  color: var(--bg-color);
+}
+
+.section-container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--sp-3);
+}
+
+.section-padding {
+  padding: var(--sp-12) 0;
+}
+
+.section-title {
+  margin-bottom: var(--sp-6);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
