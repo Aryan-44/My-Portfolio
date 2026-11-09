@@ -1,80 +1,102 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import SectionHeading from './common/SectionHeading';
+import './About.css';
 
-const About = () => {
+const highlights = [
+  {
+    number: '01',
+    title: 'Grounded document search',
+    description:
+      'A multi-document RAG assistant connects document loading, embeddings, vector retrieval, and generated responses.',
+    href: 'https://github.com/Aryan-44/RAG-ChatBot',
+    link: 'RAG ChatBot',
+  },
+  {
+    number: '02',
+    title: 'Applied machine learning',
+    description:
+      'A student-performance application explores regression, classification, and clustering in a working web app.',
+    href: 'https://github.com/Aryan-44/Student-Performance-Model',
+    link: 'Student Performance Model',
+  },
+  {
+    number: '03',
+    title: 'Useful AI automation',
+    description:
+      'A scheduled workflow analyzes weather forecasts and sends daily reports and alerts.',
+    href: 'https://github.com/Aryan-44/weather-ai-agent',
+    link: 'Weather AI Agent',
+  },
+];
+
+function About() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section id="about" className="section-padding">
+    <section className="section-padding about-section" id="about">
       <div className="section-container">
-        <motion.h2 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="section-title"
-        >
-          About Me
-        </motion.h2>
+        <SectionHeading>About Me</SectionHeading>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 items-center">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <p className="text-[17px] leading-[1.7]" style={{ color: 'var(--text-secondary)' }}>
-              AI/ML Engineer with hands-on experience in Python, machine learning, data preprocessing, exploratory data analysis, feature engineering, and model evaluation. Experienced in building Generative AI applications using LLMs, RAG, vector embeddings, and semantic search, along with AI workflow automation using n8n. Strong foundation in developing end-to-end data and AI pipelines with a focus on practical, real-world applications.
+        <div className="about-layout">
+          <div className="about-story">
+            <p className="about-kicker">AI / ML ENGINEER</p>
+            <p className="about-lead">
+              I build intelligent software that takes AI ideas from data and
+              retrieval pipelines to practical user experiences.
             </p>
-            
-            <div className="mt-6 flex flex-col gap-3">
-              <div className="inline-flex items-center gap-2 px-4 py-2 border rounded-full font-code text-[13px] w-fit"
-                   style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)', color: 'var(--accent-primary)' }}>
-                <span className="w-2 h-2 rounded-full relative">
-                  <span className="absolute inset-0 rounded-full animate-ping opacity-75" style={{ backgroundColor: 'var(--accent-primary)' }}></span>
-                  <span className="relative block w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--accent-primary)' }}></span>
-                </span>
-                B.Tech in CSE — Sri Venkateswara University, Tirupati (2022–2026) • CGPA: 8.5/10
-              </div>
-              <p className="font-code text-[12px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                <span style={{ color: 'var(--text-secondary)' }}>Relevant Coursework:</span> Machine Learning, Deep Learning, NLP, Data Structures & Algorithms, Statistics, Linear Algebra, DBMS
-              </p>
-            </div>
-          </motion.div>
+            <p className="about-description">
+              My work includes a multi-document RAG assistant, a student
+              performance modeling app, and an automated weather-reporting
+              workflow. Across these projects, I focus on making the underlying
+              data flow understandable and the result useful to the person
+              using it.
+            </p>
+            <p className="about-description">
+              I’m focused on AI/ML and Generative AI engineering, especially
+              applications that combine language models, machine learning, and
+              reliable software interfaces.
+            </p>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-2 gap-6"
+            <div className="about-education">
+              <span className="about-education__label">Education</span>
+              <h3>B.Tech in Computer Science and Engineering</h3>
+              <p>Sri Venkateswara University</p>
+            </div>
+          </div>
+
+          <div
+            className="about-highlights"
+            role="group"
+            aria-label="Selected project work"
           >
-            <div className="p-6 border rounded-lg text-center transition-all hover:-translate-y-1"
-                 style={{ backgroundColor: 'var(--card-color)', borderColor: 'var(--border-color)' }}>
-              <div className="text-[40px] font-bold mb-1" style={{ color: 'var(--accent-primary)' }}>2+</div>
-              <div className="font-code text-[13px] uppercase" style={{ color: 'var(--text-muted)' }}>Years Experience</div>
-            </div>
-            <div className="p-6 border rounded-lg text-center transition-all hover:-translate-y-1"
-                 style={{ backgroundColor: 'var(--card-color)', borderColor: 'var(--border-color)' }}>
-              <div className="text-[40px] font-bold mb-1" style={{ color: 'var(--accent-primary)' }}>9+</div>
-              <div className="font-code text-[13px] uppercase" style={{ color: 'var(--text-muted)' }}>Projects Built</div>
-            </div>
-            <div className="p-6 border rounded-lg text-center transition-all hover:-translate-y-1"
-                 style={{ backgroundColor: 'var(--card-color)', borderColor: 'var(--border-color)' }}>
-              <div className="text-[40px] font-bold mb-1" style={{ color: 'var(--accent-primary)' }}>1</div>
-              <div className="font-code text-[13px] uppercase" style={{ color: 'var(--text-muted)' }}>AIJFR Publication</div>
-            </div>
-            <div className="p-6 border rounded-lg text-center transition-all hover:-translate-y-1"
-                 style={{ backgroundColor: 'var(--card-color)', borderColor: 'var(--border-color)' }}>
-              <div className="text-[40px] font-bold mb-1" style={{ color: 'var(--accent-primary)' }}>Top 20</div>
-              <div className="font-code text-[13px] uppercase" style={{ color: 'var(--text-muted)' }}>Vidya Vikas x Google</div>
-            </div>
-          </motion.div>
-
+            {highlights.map((highlight, index) => (
+              <motion.article
+                className="about-highlight"
+                key={highlight.number}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: shouldReduceMotion ? 0 : 0.45,
+                  delay: shouldReduceMotion ? 0 : index * 0.08,
+                }}
+                viewport={{ once: true, margin: '-40px' }}
+              >
+                <span className="about-highlight__number">
+                  {highlight.number}
+                </span>
+                <h3>{highlight.title}</h3>
+                <p>{highlight.description}</p>
+                <a href={highlight.href} target="_blank" rel="noreferrer">
+                  {highlight.link}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
-};
+}
 
 export default About;

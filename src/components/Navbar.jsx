@@ -1,68 +1,252 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import Button from './common/Button';
+import ScrollProgress from './common/ScrollProgress';
+import './Navbar.css';
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+const navigationLinks = [
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Expertise' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
+];
+
+function ThemeToggle({ isDark, onToggle }) {
+  return (
+    <button
+      className="theme-toggle"
+      type="button"
+      onClick={onToggle}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+      title={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+    >
+      {isDark ? (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
+function MenuIcon({ isOpen }) {
+  return isOpen ? (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m6 6 12 12M18 6 6 18" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
+
+function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(() => window.scrollY > 24);
+  const [isDark, setIsDark] = useState(
+    () => document.documentElement.dataset.theme !== 'light',
+  );
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const menuButtonRef = useRef(null);
+  const menuPanelRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sections = navigationLinks
+      .map(({ id }) => document.getElementById(id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const currentSection = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (currentSection) setActiveSection(currentSection.target.id);
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: 0 },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    menuPanelRef.current
+      ?.querySelector('button, a[href]')
+      ?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !menuPanelRef.current) return;
+
+      const focusableItems = menuPanelRef.current.querySelectorAll(
+        'a[href], button:not(:disabled)',
+      );
+      const firstItem = focusableItems[0];
+      const lastItem = focusableItems[focusableItems.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstItem) {
+        event.preventDefault();
+        lastItem?.focus();
+      } else if (!event.shiftKey && document.activeElement === lastItem) {
+        event.preventDefault();
+        firstItem?.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMenuOpen]);
+
   const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    const nextIsDark = !isDark;
+    setIsDark(nextIsDark);
+    document.documentElement.setAttribute(
+      'data-theme',
+      nextIsDark ? 'dark' : 'light',
+    );
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    menuButtonRef.current?.focus();
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'py-4 shadow-md backdrop-blur-md' : 'py-6 backdrop-blur-sm'
-    }`} style={{ backgroundColor: 'var(--glass-bg)', borderBottom: '1px solid var(--border-color)' }}>
-      
-      <div className="section-container flex justify-between items-center">
-        {/* Logo */}
-        <a href="#" className="font-bold text-2xl tracking-tighter" style={{ color: 'var(--accent-primary)' }}>
-          Aryan.
+    <header
+      className={`site-header${isScrolled ? ' site-header--scrolled' : ''}`}
+    >
+      <ScrollProgress />
+      <nav className="site-nav" aria-label="Primary navigation">
+        <a
+          className="site-brand"
+          href="#hero"
+          aria-label="Aryan — back to top"
+        >
+          Aryan<span>.</span>
         </a>
 
-        {/* Links */}
-        <div className="hidden md:flex gap-8 items-center">
-          <a href="#about" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>About</a>
-          <a href="#experience" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>Experience</a>
-          <a href="#skills" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>Skills</a>
-          <a href="#projects" className="font-code text-sm uppercase tracking-wider transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>Projects</a>
-          
-          <button onClick={toggleTheme} className="transition-colors hover:text-[var(--accent-primary)]" style={{ color: 'var(--text-secondary)' }}>
-            {isDark ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            )}
-          </button>
-
-          <a href="#contact" className="px-6 py-2 border rounded-md font-code text-sm uppercase tracking-wider transition-all" 
-             style={{ 
-               backgroundColor: 'var(--accent-primary)', 
-               color: 'var(--bg-color)', 
-               borderColor: 'var(--accent-primary)'
-             }}
-             onMouseEnter={(e) => {
-               e.target.style.backgroundColor = 'var(--accent-hover)';
-             }}
-             onMouseLeave={(e) => {
-               e.target.style.backgroundColor = 'var(--accent-primary)';
-             }}
-          >
-            Hire Me
-          </a>
+        <div className="site-nav__desktop">
+          {navigationLinks.map(({ id, label }) => (
+            <a
+              key={id}
+              className={`site-nav__link${activeSection === id ? ' is-active' : ''}`}
+              href={`#${id}`}
+              aria-current={activeSection === id ? 'location' : undefined}
+            >
+              {label}
+            </a>
+          ))}
+          <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
+          <Button href="#contact" className="site-nav__cta">
+            Let&apos;s talk
+          </Button>
         </div>
-      </div>
-    </nav>
+
+        <button
+          className="mobile-menu-toggle"
+          type="button"
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={isMenuOpen}
+          aria-controls={isMenuOpen ? 'mobile-navigation' : undefined}
+          onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+          ref={menuButtonRef}
+        >
+          <MenuIcon isOpen={isMenuOpen} />
+        </button>
+
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              className="mobile-menu-layer"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.18 }}
+            >
+              <button
+                className="mobile-menu-backdrop"
+                type="button"
+                aria-label="Close navigation menu"
+                onClick={closeMenu}
+              />
+              <motion.div
+                className="mobile-menu-panel"
+                id="mobile-navigation"
+                ref={menuPanelRef}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Primary navigation"
+                initial={{ x: shouldReduceMotion ? 0 : '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: shouldReduceMotion ? 0 : '100%' }}
+                transition={{
+                  duration: shouldReduceMotion ? 0 : 0.22,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <button
+                  className="mobile-menu-close"
+                  type="button"
+                  onClick={closeMenu}
+                >
+                  Close menu
+                  <MenuIcon isOpen />
+                </button>
+                <div className="mobile-menu-links">
+                  {navigationLinks.map(({ id, label }) => (
+                    <a
+                      key={id}
+                      className={`mobile-menu-link${activeSection === id ? ' is-active' : ''}`}
+                      href={`#${id}`}
+                      aria-current={activeSection === id ? 'location' : undefined}
+                      onClick={closeMenu}
+                    >
+                      {label}
+                    </a>
+                  ))}
+                </div>
+                <div className="mobile-menu-footer">
+                  <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
+                  <Button href="#contact" onClick={closeMenu}>
+                    Let&apos;s talk
+                  </Button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </header>
   );
-};
+}
 
 export default Navbar;

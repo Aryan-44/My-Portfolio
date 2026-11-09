@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const InteractiveIntro = ({ onSelectSection }) => {
   const audioRef = useRef(null);
   const videoRef = useRef(null);
-  
+
   const [currentTime, setCurrentTime] = useState(0);
   const [audioFinished, setAudioFinished] = useState(false);
 
@@ -45,25 +45,25 @@ const InteractiveIntro = ({ onSelectSection }) => {
   // Framer motion variants for the buttons
   const buttonVariants = {
     hidden: { opacity: 0, scale: 0.8, y: 20 },
-    highlighted: { 
-      opacity: 1, 
-      scale: 1.2, 
-      y: 0, 
+    highlighted: {
+      opacity: 1,
+      scale: 1.2,
+      y: 0,
       boxShadow: "0px 0px 30px 10px rgba(255, 255, 255, 0.8)",
       borderColor: "#ffffff",
       color: "#ffffff"
     },
-    dimmed: { 
-      opacity: 0.5, 
-      scale: 1, 
+    dimmed: {
+      opacity: 0.5,
+      scale: 1,
       y: 0,
       boxShadow: "0px 0px 0px 0px rgba(0,0,0,0)",
       borderColor: "rgba(255,255,255,0.2)",
       color: "rgba(255,255,255,0.7)"
     },
-    interactive: { 
-      opacity: 1, 
-      scale: 1, 
+    interactive: {
+      opacity: 1,
+      scale: 1,
       y: 0,
       boxShadow: "0px 0px 15px 0px rgba(255, 255, 255, 0.2)",
       borderColor: "rgba(255,255,255,0.5)",
@@ -81,11 +81,11 @@ const InteractiveIntro = ({ onSelectSection }) => {
 
   return (
     <div className="fixed inset-0 w-full h-screen bg-[#0a0a0a] overflow-hidden flex flex-col justify-center items-center z-[50]">
-      
+
       {/* Placeholder Audio (Hidden) */}
       {/* REPLACE src WITH YOUR ACTUAL AUDIO FILE */}
-      <audio 
-        ref={audioRef} 
+      <audio
+        ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" // Placeholder audio
         preload="auto"
@@ -94,7 +94,7 @@ const InteractiveIntro = ({ onSelectSection }) => {
       {/* Character Video Layer */}
       {/* REPLACE src WITH YOUR ACTUAL TRANSPARENT WEBM VIDEO */}
       <div className="absolute inset-0 z-0 flex justify-center items-end pointer-events-none">
-        <video 
+        <video
           ref={videoRef}
           playsInline
           muted // Muted to ensure it plays, audio is handled by the <audio> tag for precision
@@ -108,7 +108,7 @@ const InteractiveIntro = ({ onSelectSection }) => {
 
       {/* UI Layer */}
       <div className="relative z-10 w-full max-w-5xl px-6 flex flex-col md:flex-row justify-around items-center h-full pb-20 pt-10">
-        
+
         {/* Buttons */}
         <motion.button
           variants={buttonVariants}
@@ -147,7 +147,7 @@ const InteractiveIntro = ({ onSelectSection }) => {
 
       {/* Skip button for development/impatient users */}
       {!audioFinished && (
-        <button 
+        <button
           onClick={() => {
             if(audioRef.current) audioRef.current.currentTime = endTime;
             setAudioFinished(true);
